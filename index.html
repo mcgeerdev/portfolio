@@ -95,12 +95,25 @@
         <!-- Hero -->
         <section class="hero hero-layout" id="intro" aria-label="Introduction">
           <div class="hero-content-grid">
+            <figure class="hero-headshot">
+              <img
+                src="/assets/headshot.webp"
+                srcset="/assets/headshot-1x.webp 144w, /assets/headshot.webp 216w"
+                sizes="(min-width: 64rem) 144px, 144px"
+                alt="Devan McGeer"
+                width="216"
+                height="216"
+                class="headshot hero-image"
+                loading="eager"
+                fetchpriority="high"
+              >
+              <figcaption class="sr-only">Devan McGeer, Site Reliability Engineer</figcaption>
+            </figure>
             <div class="hero-left">
               <h1>Devan McGeer</h1>
-              <span class="avail-badge">&#x25cf; Available — Remote</span>
               <h2 class="hero-subtitle">Site Reliability Engineer</h2>
               <p class="hero-tagline">Kubernetes · AWS · Terraform · Observability</p>
-              <p class="hero-stats">5+ yrs experience&nbsp;·&nbsp;99.9% uptime focus&nbsp;·&nbsp;Remote-first</p>
+              <p class="hero-stats">5+ yrs experience&nbsp;·&nbsp;Remote-first</p>
               <div class="hero-actions">
                 <a href="mailto:mcgeer.devan@gmail.com" class="hero-cta">Get In Touch</a>
                 <a href="/projects/" class="hero-cta hero-cta--secondary">View My Work</a>
@@ -117,7 +130,8 @@
                   <span class="pill">Datadog</span>
                   <span class="pill">Go</span>
                   <span class="pill">GitHub Actions</span>
-                  <span class="pill">Jenkins</span>
+                  <span class="pill">TypeScript</span>
+                  <span class="pill">Bash</span>
                 </div>
               </div>
             </div>
@@ -133,19 +147,6 @@
             <!-- About -->
             <section id="about" aria-labelledby="about-heading">
               <h2 id="about-heading" class="section-heading">ABOUT</h2>
-              <figure>
-                <img
-                  src="/assets/headshot.webp"
-                  srcset="/assets/headshot-1x.webp 144w, /assets/headshot.webp 216w"
-                  sizes="144px"
-                  alt="Devan McGeer"
-                  width="216"
-                  height="216"
-                  class="headshot"
-                  loading="lazy"
-                >
-                <figcaption class="sr-only">Devan McGeer, Site Reliability Engineer</figcaption>
-              </figure>
               <p class="about-bio">I'm a Site Reliability Engineer with 5 years and 5 months of experience running production Kubernetes clusters and defining SLOs and SLIs. I build observability pipelines with Datadog and OpenTelemetry, and write Go and Terraform to automate infrastructure and improve CI/CD reliability. I measure system health against error budgets and treat toil reduction as real engineering work.</p>
             </section>
 
