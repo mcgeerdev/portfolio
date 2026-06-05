@@ -22,11 +22,11 @@ jobs:
     outputs:
       has_commits: ${{ steps.check.outputs.has_commits }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
           fetch-depth: 0
 
-      - uses: jdx/mise-action@9dc7d5dd454262207dea3ab5a06a3df6afc8ff26
+      - uses: jdx/mise-action@5228313ee0372e111a38da051671ca30fc5a96db
         with:
           install: false
 
@@ -46,7 +46,7 @@ jobs:
         if: github.event_name != 'schedule' || steps.check.outputs.has_commits == 'true'
         run: mise run build:minified
 
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa
         if: github.event_name != 'schedule' || steps.check.outputs.has_commits == 'true'
         with:
           path: _site
@@ -60,4 +60,4 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e
