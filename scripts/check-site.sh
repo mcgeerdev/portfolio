@@ -37,7 +37,7 @@ while IFS= read -r html; do
   canonical="$(sed -n 's#.*<link rel="canonical" href="https://mcgeer.dev\([^"]*\)".*#\1#p' "$html" | head -n 1)"
   [[ -z "$canonical" ]] && continue
   if ! grep -q "<loc>https://mcgeer.dev${canonical}</loc>" "${ROOT_DIR}/sitemap.xml"; then
-    report_failure "canonical URL is missing from sitemap: ${canonical} (${html#${SITE_DIR}/})"
+    report_failure "canonical URL is missing from sitemap: ${canonical} (${html#"$SITE_DIR"/})"
   fi
 done < <(find "$SITE_DIR" -name '*.html' -not -path "${SITE_DIR}/404.html" | sort)
 

@@ -132,7 +132,7 @@ if [[ "$MINIFY" -eq 1 ]]; then
     archive_name="$(minify_archive_name)"
     minify_archive="${tmp_dir}/${archive_name}"
 
-    curl -fsSL -o "$minify_archive" \
+    curl --max-time 60 -fsSL -o "$minify_archive" \
       "https://github.com/tdewolff/minify/releases/download/v${minify_version}/${archive_name}"
     verify_archive "$minify_archive" "$(minify_archive_sha256 "$archive_name")"
     tar -xzf "$minify_archive" -C "$tmp_dir" minify
