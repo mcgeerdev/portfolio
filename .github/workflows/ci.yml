@@ -16,6 +16,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: jdx/mise-action@v3
+        with:
+          install: false
+
+      - name: Run site guardrails
+        run: mise run check
+
       - name: Validate HTML
         uses: Cyb3r-Jak3/html5validator-action@v7.2.0
         with:
@@ -26,12 +33,10 @@ jobs:
         with:
           args: >-
             --no-progress
-            --base https://mcgeer.dev
+            --root-dir ${{ github.workspace }}/_site
+            --remap '^https://mcgeer\.dev file://${{ github.workspace }}/_site'
             --exclude 'linkedin\.com'
             --exclude 'ninety10\.co\.za'
-            --exclude 'mcgeer\.dev/style\.css'
-            --exclude 'mcgeer\.dev/favicon\.svg'
-            --exclude 'mcgeer\.dev/fonts/'
             --accept 200,418,999
-            '*.html' 'resume/*.html'
+            '_site/**/*.html'
           fail: true

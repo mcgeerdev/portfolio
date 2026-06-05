@@ -26,6 +26,10 @@ jobs:
         with:
           fetch-depth: 0
 
+      - uses: jdx/mise-action@v3
+        with:
+          install: false
+
       - name: Check for recent commits (scheduled runs only)
         id: check
         if: github.event_name == 'schedule'
@@ -38,72 +42,9 @@ jobs:
             echo "has_commits=true" >> $GITHUB_OUTPUT
           fi
 
-      - name: Stage site
+      - name: Build staged site
         if: github.event_name != 'schedule' || steps.check.outputs.has_commits == 'true'
-        run: |
-          mkdir _site
-          cp -r index.html 404.html style.css favicon.svg og-image.png \
-                robots.txt sitemap.xml CNAME _headers \
-                fonts assets resume \
-                _site/
-
-      - name: Minify staged site
-        if: github.event_name != 'schedule' || steps.check.outputs.has_commits == 'true'
-        env:
-          MINIFY_VERSION: "2.24.13"
-          MINIFY_SHA256: "6cdd5c8c1d605d60f48a2f4a654595235f1fb50f804b107f72f6a6c87240a1bd"
-        run: |
-          set -euo pipefail
-          curl -fsSL -o minify.tar.gz \
-            "https://github.com/tdewolff/minify/releases/download/v${MINIFY_VERSION}/minify_linux_amd64.tar.gz"
-          echo "${MINIFY_SHA256}  minify.tar.gz" | sha256sum -c -
-          tar -xzf minify.tar.gz minify
-          chmod +x minify
-          ./minify --recursive --match='\.(html|css|svg|xml)$' --output _site/ _site/
-          rm -f minify minify.tar.gz
-
-      - name: Hash static assets
-        if: github.event_name != 'schedule' || steps.check.outputs.has_commits == 'true'
-        run: |
-          set -euo pipefail
-
-          # 1. Hash fonts and update references in style.css and HTML preloads
-          CSS=_site/style.css
-          HTMLS=(_site/index.html _site/404.html _site/resume/index.html)
-          for font in _site/fonts/*.woff2; do
-            hash=$(md5sum "$font" | cut -c1-8)
-            base=$(basename "$font" .woff2)
-            new="${base}.${hash}.woff2"
-            mv "$font" "_site/fonts/${new}"
-            sed -i "s|/fonts/${base}\.woff2|/fonts/${new}|g" "$CSS" "${HTMLS[@]}"
-          done
-
-          # 2. Hash style.css (after font refs updated) and update HTML
-          css_hash=$(md5sum "$CSS" | cut -c1-8)
-          mv "$CSS" "_site/style.${css_hash}.css"
-          sed -i "s|/style\.css|/style.${css_hash}.css|g" "${HTMLS[@]}"
-
-          # 3. Hash og-image.png and update HTML og:image references
-          og_hash=$(md5sum _site/og-image.png | cut -c1-8)
-          mv _site/og-image.png "_site/og-image.${og_hash}.png"
-          sed -i "s|/og-image\.png|/og-image.${og_hash}.png|g" _site/index.html _site/resume/index.html
-
-          # 4. Hash favicon.svg and update HTML references
-          fav_hash=$(md5sum _site/favicon.svg | cut -c1-8)
-          mv _site/favicon.svg "_site/favicon.${fav_hash}.svg"
-          sed -i "s|/favicon\.svg|/favicon.${fav_hash}.svg|g" "${HTMLS[@]}"
-
-          # 5. Append immutable rules to _headers for each hashed asset
-          {
-            printf '\n# Hashed assets — immutable caching (appended at deploy time)\n'
-            for font in _site/fonts/*.woff2; do
-              n=$(basename "$font")
-              printf '\n/fonts/%s\n  Cache-Control: public, max-age=31536000, immutable\n' "$n"
-            done
-            printf '\n/style.%s.css\n  Cache-Control: public, max-age=31536000, immutable\n  Vary: Accept-Encoding\n' "$css_hash"
-            printf '\n/og-image.%s.png\n  Cache-Control: public, max-age=31536000, immutable\n  Vary: Accept-Encoding\n' "$og_hash"
-            printf '\n/favicon.%s.svg\n  Cache-Control: public, max-age=31536000, immutable\n  Vary: Accept-Encoding\n' "$fav_hash"
-          } >> _site/_headers
+        run: mise run build:minified
 
       - uses: actions/upload-pages-artifact@v3
         if: github.event_name != 'schedule' || steps.check.outputs.has_commits == 'true'

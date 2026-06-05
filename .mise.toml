@@ -1,0 +1,15 @@
+[tasks.serve]
+description = "Serve the static site locally"
+run = "python3 -m http.server 8000"
+
+[tasks.build]
+description = "Stage the public site into _site"
+run = "scripts/build-site.sh"
+
+[tasks."build:minified"]
+description = "Stage, minify, and hash the public site into _site"
+run = "scripts/build-site.sh --minify"
+
+[tasks.check]
+description = "Run static-site guardrails"
+run = "scripts/check-site.sh"
