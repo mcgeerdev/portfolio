@@ -18,7 +18,7 @@ Hand-written HTML + CSS · zero JavaScript by default · no framework · `mise` 
 | `blog/index.html` | `/blog/` landing page |
 | `blog/*/index.html` | Draft posts; not published unless added to `sitemap.xml` |
 | `fonts/` | Self-hosted woff2 (lekton-400, lekton-700, lexend-zetta-400) |
-| `assets/` | `devan-mcgeer-cv.pdf`, `headshot.webp` |
+| `assets/` | `headshot.webp` |
 | `favicon.svg`, `og-image.png` | Site icons + social card |
 | `robots.txt`, `sitemap.xml` | Crawler hints |
 | `CNAME` | Pins custom domain `mcgeer.dev` |
