@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data: https://mcgeer.dev; connect-src 'self'; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'">
   <title>Projects — Devan McGeer</title>
-  <meta name="description" content="Projects and case studies by Devan McGeer — Site Reliability Engineer. Kubernetes, Terraform, AWS, Datadog, and Go.">
+  <meta name="description" content="Projects and case studies by Devan McGeer — backend/data systems, SRE observability, infrastructure automation, Go, Kubernetes, AWS, and Datadog.">
   <link rel="canonical" href="https://mcgeer.dev/projects/">
   <meta property="og:title" content="Projects — Devan McGeer | SRE">
   <meta property="og:description" content="Projects and case studies by Devan McGeer, Site Reliability Engineer.">
@@ -68,48 +68,47 @@
 
         <section id="projects">
 
-          <!-- Kubernetes Observability Platform -->
+          <!-- Event-Driven Observability -->
           <div class="project-entry">
-            <h2 class="project-title">Kubernetes Observability Platform</h2>
+            <h2 class="project-title">Event-Driven Observability</h2>
             <div class="project-meta">
               <p class="project-stack-label">STACK</p>
               <div class="project-chips">
-                <span class="pill">Kubernetes</span>
                 <span class="pill">Datadog</span>
-                <span class="pill">OpenTelemetry</span>
-                <span class="pill">Terraform</span>
-                <span class="pill">AWS</span>
+                <span class="pill">GCP Pub/Sub</span>
+                <span class="pill">Go</span>
+                <span class="pill">MongoDB</span>
               </div>
             </div>
             <div class="project-body">
               <p class="project-label">PROBLEM</p>
-              <p class="project-text">Production Kubernetes environments need clear reliability signals before incidents become customer-facing. The work focused on making service health visible through practical SLOs, dashboards, and alerting paths.</p>
+              <p class="project-text">Event-driven workflows are difficult to operate when engineers cannot quickly see where asynchronous messages, retries, or data-flow failures are happening.</p>
               <p class="project-label">SOLUTION</p>
-              <p class="project-text">Built observability coverage around Kubernetes workloads using Datadog, OpenTelemetry, and Terraform-managed configuration so reliability signals could be reviewed and changed as code.</p>
+              <p class="project-text">Added instrumentation and Datadog dashboards around critical event/data flows so service behaviour and failure modes were visible during debugging and operational review.</p>
               <p class="project-label">OUTCOME</p>
-              <p class="project-text">Improved incident visibility, reduced manual investigation work, and gave engineering teams a shared vocabulary for service health, error budgets, and operational follow-up.</p>
+              <p class="project-text">Made asynchronous workflow issues easier to investigate and provided clearer signals that could support operational alerting without exposing confidential platform details.</p>
             </div>
             <p class="project-link">Confidential — available on request</p>
           </div>
 
-          <!-- Zero-Downtime Deployment Pipeline -->
+          <!-- Market Data Sync -->
           <div class="project-entry">
-            <h2 class="project-title">Zero-Downtime Deployment Pipeline</h2>
+            <h2 class="project-title">Market Data Sync</h2>
             <div class="project-meta">
               <p class="project-stack-label">STACK</p>
               <div class="project-chips">
-                <span class="pill">GitHub Actions</span>
-                <span class="pill">Kubernetes</span>
-                <span class="pill">Terraform</span>
+                <span class="pill">Go</span>
+                <span class="pill">gRPC</span>
+                <span class="pill">Vue</span>
               </div>
             </div>
             <div class="project-body">
               <p class="project-label">PROBLEM</p>
-              <p class="project-text">Manual deployment steps and inconsistent release checks make production changes harder to reason about, especially when teams need repeatable rollouts and quick recovery paths.</p>
+              <p class="project-text">A daily market-data sync from external providers was running sequentially, which delayed freshness for internal reporting workflows and public-facing website data.</p>
               <p class="project-label">SOLUTION</p>
-              <p class="project-text">Worked on deployment automation with GitHub Actions, Kubernetes rollout patterns, and Terraform guardrails to make release behaviour more predictable.</p>
+              <p class="project-text">Reworked the sync around concurrent goroutines and service integration patterns while keeping the provider details generic and implementation reviewable.</p>
               <p class="project-label">OUTCOME</p>
-              <p class="project-text">Reduced toil around releases and made deployment state easier to inspect, repeat, and recover from when production changes needed attention.</p>
+              <p class="project-text">Reduced the daily sync runtime from 20+ minutes to under 3 minutes, improving data freshness for investment analysts and website users.</p>
             </div>
             <p class="project-link">Confidential — available on request</p>
           </div>
@@ -128,7 +127,7 @@
             </div>
             <div class="project-body">
               <p class="project-label">PROBLEM</p>
-              <p class="project-text">Repeated infrastructure work becomes fragile when teams rely on manual setup, local scripts, and one-off cloud configuration that is hard to review or reproduce.</p>
+              <p class="project-text">Repeated platform work becomes fragile when teams rely on manual setup, local scripts, and one-off cloud configuration that is hard to review or reproduce.</p>
               <p class="project-label">SOLUTION</p>
               <p class="project-text">Used Terraform, Go, and shell automation to standardise common infrastructure workflows and keep cloud changes reviewable through source-controlled definitions.</p>
               <p class="project-label">OUTCOME</p>
